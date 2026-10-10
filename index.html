@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2P利用「NEiN」</title>
+  <!-- FontAwesome アイコン -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="https://amane-header.edgeone.dev/file.png">
+  <style>
+    /* ダークモード（デフォルト） */
+    :root {
+      --bg-dark: #0f172a;
+      --panel-bg: #1e293b;
+      --panel-border: #334155;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --accent-blue: #38bdf8;
+      --header-bg: #090d16;
+      --section-bg: #141f32;
+      --card-bg: #172133;
+      --right-panel-bg: #0b1120;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+      --hover-bg: #283548;
+      --active-bg: #1e3a5f;
+      --select-bg: #0f172a;
+    }
+
+    /* ライトモード */
+    body.theme-light {
+      --bg-dark: #f1f5f9;
+      --panel-bg: #ffffff;
+      --panel-border: #cbd5e1;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --accent-blue: #0284c7;
+      --header-bg: #ffffff;
+      --section-bg: #f8fafc;
+      --card-bg: #f1f5f9;
+      --right-panel-bg: #e2e8f0;
+      --code-bg: #ffffff;
+      --code-text: #1e293b;
+      --hover-bg: #e2e8f0;
+      --active-bg: #e0f2fe;
+      --select-bg: #ffffff;
+    }
+
+    /* パステルピンク */
+    body.theme-pastel-pink {
+      --bg-dark: #fff0f3;
+      --panel-bg: #ffe4e6;
+      --panel-border: #fecdd3;
+      --text-main: #5c4033;
+      --text-sub: #885c5c;
+      --accent-blue: #e11d48;
+      --header-bg: #ffccd5;
+      --section-bg: #ffd1dc;
+      --card-bg: #ffe4e6;
+      --right-panel-bg: #fff0f3;
+      --code-bg: #ffffff;
+      --code-text: #5c4033;
+      --hover-bg: #ffb3c1;
+      --active-bg: #ff8fab;
+      --select-bg: #ffffff;
+    }
+
+    /* パステルブルー */
+    body.theme-pastel-blue {
+      --bg-dark: #f0f8ff;
+      --panel-bg: #e0f2fe;
+      --panel-border: #bae6fd;
+      --text-main: #1e3a8a;
+      --text-sub: #475569;
+      --accent-blue: #0284c7;
+      --header-bg: #bae6fd;
+      --section-bg: #cfe8fc;
+      --card-bg: #e0f2fe;
+      --right-panel-bg: #f0f8ff;
+      --code-bg: #ffffff;
+      --code-text: #1e3a8a;
+      --hover-bg: #90cdf4;
+      --active-bg: #63b3ed;
+      --select-bg: #ffffff;
+    }
+
+    /* パステルミント */
+    body.theme-pastel-mint {
+      --bg-dark: #f2faf4;
+      --panel-bg: #dcfce7;
+      --panel-border: #bbf7d0;
+      --text-main: #14532d;
+      --text-sub: #475569;
+      --accent-blue: #16a34a;
+      --header-bg: #bbf7d0;
+      --section-bg: #c6f6d5;
+      --card-bg: #dcfce7;
+      --right-panel-bg: #f2faf4;
+      --code-bg: #ffffff;
+      --code-text: #14532d;
+      --hover-bg: #9ae6b4;
+      --active-bg: #68d391;
+      --select-bg: #ffffff;
+    }
+    
+    /* パステル藍色 */
+    body.theme-pastel-indigo {
+      --bg-dark: #f0f4f8;
+      --panel-bg: #e2e8f4;
+      --panel-border: #cbd5e1;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --accent-blue: #3b82f6;
+      --header-bg: #cbd5e1;
+      --section-bg: #d7e0ed;
+      --card-bg: #e2e8f4;
+      --right-panel-bg: #f0f4f8;
+      --code-bg: #ffffff;
+      --code-text: #1e293b;
+      --hover-bg: #cbd5e1;
+      --active-bg: #bfdbfe;
+      --select-bg: #ffffff;
+    }
+    
+    /* パステル黄色 */
+    body.theme-pastel-yellow {
+      --bg-dark: #fefce8;
+      --panel-bg: #fef9c3;
+      --panel-border: #fef08a;
+      --text-main: #713f12;
+      --text-sub: #854d0e;
+      --accent-blue: #ca8a04;
+      --header-bg: #fef08a;
+      --section-bg: #fef08a;
+      --card-bg: #fef9c3;
+      --right-panel-bg: #fefce8;
+      --code-bg: #ffffff;
+      --code-text: #713f12;
+      --hover-bg: #fde047;
+      --active-bg: #fef08a;
+      --select-bg: #ffffff;
+    }
+    
+    /* パステル赤色 */
+    body.theme-pastel-red {
+      --bg-dark: #fff5f5;
+      --panel-bg: #ffe4e6;
+      --panel-border: #fecdd3;
+      --text-main: #7f1d1d;
+      --text-sub: #9f1239;
+      --accent-blue: #e11d48;
+      --header-bg: #fecdd3;
+      --section-bg: #fda4af;
+      --card-bg: #ffe4e6;
+      --right-panel-bg: #fff5f5;
+      --code-bg: #ffffff;
+      --code-text: #7f1d1d;
+      --hover-bg: #fbcfe8;
+      --active-bg: #f43f5e;
+      --select-bg: #ffffff;
+    }
+    
+    /* パステル紫色 */
+    body.theme-pastel-purple {
+      --bg-dark: #f8f7ff;
+      --panel-bg: #ede9fe;
+      --panel-border: #ddd6fe;
+      --text-main: #3b0764;
+      --text-sub: #6b21a8;
+      --accent-blue: #8b5cf6;
+      --header-bg: #ddd6fe;
+      --section-bg: #c4b5fd;
+      --card-bg: #ede9fe;
+      --right-panel-bg: #f8f7ff;
+      --code-bg: #ffffff;
+      --code-text: #3b0764;
+      --hover-bg: #ddd6fe;
+      --active-bg: #a78bfa;
+      --select-bg: #ffffff;
+    }
+    
+    /* パステルオレンジ */
+    body.theme-pastel-orange {
+      --bg-dark: #fffbeb;
+      --panel-bg: #fef3c7;
+      --panel-border: #fde68a;
+      --text-main: #78350f;
+      --text-sub: #92400e;
+      --accent-blue: #d97706;
+      --header-bg: #fde68a;
+      --section-bg: #fcd34d;
+      --card-bg: #fef3c7;
+      --right-panel-bg: #fffbeb;
+      --code-bg: #ffffff;
+      --code-text: #78350f;
+      --hover-bg: #fde68a;
+      --active-bg: #fbbf24;
+      --select-bg: #ffffff;
+    }
+
+    /* 暗めのグリーン（ダークフォレスト） */
+    body.theme-dark-green {
+      --bg-dark: #06140d;
+      --panel-bg: #0f281b;
+      --panel-border: #1b4332;
+      --text-main: #e2f1ec;
+      --text-sub: #8fa89b;
+      --accent-blue: #2d6a4f;
+      --header-bg: #040d08;
+      --section-bg: #0b1f15;
+      --card-bg: #133322;
+      --right-panel-bg: #040d08;
+      --code-bg: #06140d;
+      --code-text: #e2f1ec;
+      --hover-bg: #1b4332;
+      --active-bg: #2d6a4f;
+      --select-bg: #06140d;
+    }
+    
+    /* 銀河風グラデーション */
+    body.theme-galaxy {
+      --bg-dark: #090314;
+      --panel-bg: #130b26;
+      --panel-border: #2e1d52;
+      --text-main: #f3e8ff;
+      --text-sub: #c084fc;
+      --accent-blue: #a855f7;
+      --header-bg: #06020c;
+      --section-bg: #190f33;
+      --card-bg: #1c1138;
+      --right-panel-bg: #05010a;
+      --code-bg: #090314;
+      --code-text: #f3e8ff;
+      --hover-bg: #2e1d52;
+      --active-bg: #581c87;
+      --select-bg: #090314;
+      background: linear-gradient(135deg, #090314 0%, #1a0b2e 50%, #2e1065 100%);
+      background-attachment: fixed;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    /* ヘッダー */
+    header {
+      background: var(--header-bg);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .logo-area { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.1rem; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #64748b; }
+    .status-dot.active { background: #10b981; box-shadow: 0 0 8px #10b981; }
+
+    /* メインレイアウト (左右分割) */
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* 左側パネル */
+    .left-panel {
+      width: 420px;
+      background: var(--panel-bg);
+      border-right: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    /* タブ切り替えボタンエリア */
+    .tab-header {
+      display: flex;
+      background: var(--section-bg);
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 4px;
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-weight: bold;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn:hover {
+      background: var(--hover-bg);
+      color: var(--text-main);
+    }
+    .tab-btn.active {
+      background: var(--panel-bg);
+      color: var(--accent-blue);
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    /* タブコンテンツエリア */
+    .tab-content {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+
+    /* 右側パネル: テンプレート表示エリア */
+    .right-panel {
+      flex: 1;
+      background: var(--right-panel-bg);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 20px;
+      gap: 16px;
+    }
+
+    /* 緊急地震速報（警報）バナー */
+    .eew-alert {
+      display: none;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: white;
+      padding: 12px;
+      text-align: center;
+      font-weight: bold;
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse { from { opacity: 0.85; } to { opacity: 1; } }
+
+    /* セクション共通 */
+    .section-title {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 10px 16px;
+      background: var(--section-bg);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 最新地震詳細カード */
+    .quake-card {
+      padding: 16px;
+      border-bottom: 1px solid var(--panel-border);
+      background: var(--card-bg);
+    }
+    .quake-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .quake-title { font-size: 1.2rem; font-weight: bold; color: var(--accent-blue); }
+    .scale-badge {
+      font-weight: bold; padding: 4px 12px; border-radius: 6px; font-size: 1.1rem; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .quake-meta { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.9rem; color: var(--text-sub); }
+    .quake-meta span { color: var(--text-main); font-weight: 500; }
+
+    /* 設定パネル内項目 */
+    .settings-panel {
+      padding: 14px 16px; background: var(--card-bg); border-bottom: 1px solid var(--panel-border);
+      display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem;
+    }
+    .settings-panel select {
+      background: var(--select-bg); color: var(--text-main); border: 1px solid var(--panel-border);
+      padding: 6px 10px; border-radius: 4px;
+    }
+
+    /* 掲示板タブの個別記事プロットカード */
+    .bulletin-card {
+      padding: 16px;
+      border-bottom: 1px solid var(--panel-border);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bulletin-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bulletin-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--accent-blue);
+    }
+    .bulletin-date {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+    .bulletin-content {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      white-space: pre-wrap;
+    }
+
+    /* 過去履歴リスト */
+    .history-list {
+      flex: 1; overflow-y: auto;
+    }
+    .history-item {
+      padding: 12px 16px; border-bottom: 1px solid var(--panel-border); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; transition: background 0.15s;
+    }
+    .history-item:hover { background: var(--hover-bg); }
+    .history-item.active { background: var(--active-bg); border-left: 4px solid var(--accent-blue); }
+    .history-info { display: flex; flex-direction: column; gap: 2px; }
+    .history-time { font-size: 0.75rem; color: var(--text-sub); }
+    .history-hypo { font-weight: bold; font-size: 0.95rem; }
+
+    /* 右側テンプレート表示カード */
+    .template-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .template-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .template-card-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .template-card-body {
+      background: var(--code-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: var(--code-text);
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+    .btn-copy {
+      background: #2563eb; color: white; border: none; padding: 6px 14px;
+      border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;
+      display: flex; align-items: center; gap: 6px; transition: background 0.2s;
+    }
+    .btn-copy:hover { background: #1d4ed8; }
+    .btn-copy.copied { background: #059669; }
+
+    /* 震度カラー */
+    .scale-10 { background-color: #3b82f6; } /* 1 */
+    .scale-20 { background-color: #06b6d4; } /* 2 */
+    .scale-30 { background-color: #10b981; } /* 3 */
+    .scale-40 { background-color: #f59e0b; } /* 4 */
+    .scale-45 { background-color: #ff7a00; } /* 5- */
+    .scale-50 { background-color: #ef4444; } /* 5+ */
+    .scale-55 { background-color: #dc2626; } /* 6- */
+    .scale-60 { background-color: #991b1b; } /* 6+ */
+    .scale-70 { background-color: #7c3aed; } /* 7 */
+    .scale-unknown { background-color: #64748b; }
+  </style>
+</head>
+<body>
+
+  <!-- YouTube BGM用プレーヤー要素（非表示） -->
+  <div id="youtube-player" style="display:none;"></div>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="logo-area">
+      <i class="fa-solid font-awesome-flag fa-house-chimney-crack" style="color: var(--accent-blue);"></i>
+      <span>P2P利用「NEiN」</span>
+    </div>
+    <div class="header-right">
+      <div class="status-badge">
+        <div id="statusDot" class="status-dot"></div>
+        <span id="statusText">接続準備中...</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- 左側パネル -->
+    <div class="left-panel">
+      <!-- 緊急地震速報（警報）アラートバナー -->
+      <div id="eewAlert" class="eew-alert">
+        <i class="fa-solid fa-triangle-exclamation"></i> 緊急地震速報！強い揺れに警戒！
+      </div>
+
+      <!-- タブ切り替えボタン -->
+      <div class="tab-header">
+        <button id="tabQuakeBtn" class="tab-btn active" onclick="switchTab('quake')">
+          <i class="fa-solid fa-house"></i> 地震情報
+        </button>
+        <button id="tabBulletinBtn" class="tab-btn" onclick="switchTab('bulletin')">
+          <i class="fa-solid fa-comments"></i> 掲示板
+        </button>
+        <button id="tabSettingsBtn" class="tab-btn" onclick="switchTab('settings')">
+          <i class="fa-solid fa-gear"></i> 設定
+        </button>
+      </div>
+
+      <!-- 【タブ1】地震情報タブ -->
+      <div id="tabQuake" class="tab-content active">
+        <div class="section-title">
+          <span><i class="fa-solid fa-circle-info"></i> 地震詳細情報</span>
+          <span id="updateTime" style="font-size: 0.75rem;">---</span>
+        </div>
+        
+        <div class="quake-card">
+          <div class="quake-header">
+            <div>
+              <div id="hypocenterName" class="quake-title">---</div>
+              <div id="quakeTime" style="font-size: 0.8rem; color: var(--text-sub); margin-top:2px;">---</div>
+            </div>
+            <div id="maxScaleBadge" class="scale-badge scale-unknown">震度 -</div>
+          </div>
+          <div class="quake-meta">
+            <div>マグニチュード: <span id="magnitudeVal">M--</span></div>
+            <div>震源の深さ: <span id="depthVal">-- km</span></div>
+            <div style="grid-column: span 2;">津波の影響: <span id="tsunamiVal">---</span></div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <span><i class="fa-solid fa-clock-rotate-left"></i> 地震履歴（直近1週間）</span>
+        </div>
+        <div id="historyList" class="history-list">
+          <!-- 履歴要素がJSで動的追加されます -->
+        </div>
+      </div>
+
+      <!-- 【タブ2】掲示板タブ (追加) -->
+      <div id="tabBulletin" class="tab-content">
+        <div class="section-title">
+          <span><i class="fa-solid fa-bullhorn"></i> お知らせ・掲示板</span>
+        </div>
+        <div id="bulletinContainer" style="flex: 1; overflow-y: auto;">
+          <!-- 記事プロットがJavaScriptでここに動的追加されます -->
+        </div>
+      </div>
+
+      <!-- 【タブ3】設定タブ -->
+      <div id="tabSettings" class="tab-content">
+        <div class="section-title">
+          <span><i class="fa-solid fa-palette"></i> テーマ・外観</span>
+        </div>
+        <div class="settings-panel">
+          <label><i class="fa-solid fa-brush"></i> カラーテーマ:</label>
+          <select id="themeSelect" onchange="changeTheme()">
+            <option value="dark" selected>ダーク</option>
+            <option value="light">ライト</option>
+            <option value="pastel-pink">ピンク</option>
+            <option value="pastel-blue">ブルー</option>
+            <option value="pastel-mint">ミント</option>
+            <option value="pastel-indigo">ネイビー</option>
+            <option value="pastel-yellow">イエロー</option>
+            <option value="pastel-red">レッド</option>
+            <option value="pastel-purple">パープル</option>
+            <option value="pastel-orange">オレンジ</option>
+            <option value="dark-green">ダークグリーン</option>
+            <option value="galaxy">ギャラクシー</option>
+          </select>
+        </div>
+
+        <div class="section-title">
+          <span><i class="fa-solid fa-bell"></i> 通知設定</span>
+        </div>
+        <div class="settings-panel">
+          <label><i class="fa-solid fa-triangle-exclamation"></i> デスクトップ通知:</label>
+          <select id="notifyThreshold" onchange="saveNotificationSettings()">
+            <option value="10">震度1以上で通知</option>
+            <option value="20">震度2以上で通知</option>
+            <option value="30" selected>震度3以上で通知</option>
+            <option value="40">震度4以上で通知</option>
+            <option value="45">震度5弱以上で通知</option>
+            <option value="999">通知オフ</option>
+          </select>
+        </div>
+
+        <!-- 音楽設定。下の value=""にお好きなYouTubeの動画ID(v= の後の文字列) を入れると保存されます。-->
+        <div class="section-title">
+          <span><i class="fa-solid fa-music"></i> YouTube BGM設定</span>
+        </div>
+        <div class="settings-panel">
+          <label><i class="fa-solid fa-compact-disc"></i> 再生状態:</label>
+          <select id="bgmToggle" onchange="toggleYouTubeBGM()">
+            <option value="off" selected>OFF</option>
+            <option value="on">ON (自動再生)</option>
+          </select>
+        </div>
+        <div class="settings-panel">
+          <label><i class="fa-solid fa-list"></i> BGMトラック:</label>
+          <select id="bgmTrackSelect" onchange="changeYouTubeTrack()">
+            <!-- ここにお好みのYouTube動画IDを設定できます -->
+            <option value="kG-hSbE2ANc">BGM-1</option>
+            <option value="6mkvqHnbgY4">BGM-2</option>
+            <option value="UzaTAYqLfWc">BGM-3</option>
+            <option value="wpfR9qBYwfQ">BGM-4</option>
+            <option value="LUvA8rfBkCo">BGM-5</option>
+            <option value="CJZ2QXoApmg">BGM-6</option>
+            <option value="43RngsPIUuU">BGM-7</option>
+            <option value="nWKPYs54INA">BGM-8</option>
+            <option value="Lyj-MZSAA9o">BGM-9</option>
+            <option value="2FTNsaOFLlI">BGM-10</option>
+            <option value="_WBjtiaAE3g">BGM-11</option>
+            <option value="krKZTvZBKM8">BGM-12</option>
+            <option value="AnMhdn0wJ4I">洋楽-1</option>
+            <option value="hT_nvWreIhg">洋楽-2</option>
+            <option value="60ItHLz5WEA">洋楽-3</option>
+            <option value="IWC2sfwdK40">洋楽-4</option>
+            <option value="OPf0YbXqDm0">洋楽-5</option>
+            <option value="9bZkp7q19f0">洋楽-6</option>
+            <option value="RgKAFK5djSk">洋楽-7</option>
+            <option value="kJQP7kiw5Fk">洋楽-8</option>
+            <option value="xuMKgVJQZkQ">演歌-1</option>
+            <option value="iqEr3P78fz8">J-POP-1</option>
+            <option value="yA_h7zM0bcU">J-POP-2</option>
+            <option value="g--Qmi048Vw">ボカロ-1</option>
+            <option value="eRa90TjoMZs">ボカロ-2</option>
+            <option value="g--Qmi048Vw">ボカロ-3</option>
+            <option value="TA5OFS_xX0c">ボカロ-4</option>
+            <option value="dHXC_ahjtEE">ボカロ-5</option>
+            <option value="YznQjwMjDKw">ボカロ-6</option>
+            <option value="7xht3kQO_TM">ボカロ-7</option>
+            <option value="uOeOZQ5eCZ0">ボカロ-8</option>
+            <option value="91R2hdV_-aQ">ボカロ-9</option>
+            <option value="wPOF5FgG3DU">Dreamcore-1</option>
+            <option value="v23GA_5xYNU">Dreamcore-2</option>
+            <option value="cdHdPu4JqSE">Dreamcore-3</option>
+            <option value="zPCk29OnVi4">メドレー-1</option>
+            <option value="H9utzDWTIJg">メドレー-2</option>
+            <option value="UzkiLRom6J8">音MAD-1</option>
+            <option value="anWwvgq9sRU">音MAD-2</option>
+            <option value="XgfyGWD64fc">音MAD-3</option>
+            <option value="QVpPeUUSNwY">音MAD-4</option>
+            <option value="k-6O8gGbdz0">音MAD-5</option>
+            <option value="TE-j8DwHJXU">音MAD-6</option>
+            <option value="4yoNTEM5BDQ">音MAD-7</option>
+            <option value="INIH9KeffM0">音MAD-8</option>
+            <option value="xyhzrHh16x8">音MAD-9</option>
+            <option value="Zkk-KYyhnAI">音MAD-10</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 右側パネル: 自動生成テンプレート表示エリア -->
+    <div class="right-panel">
+      <div class="section-title" style="background: transparent; border: none; padding: 0 0 4px 0;">
+        <span style="font-size: 1rem; color: var(--text-main); font-weight: bold;">
+          <i class="fa-solid fa-file-lines" style="color: var(--accent-blue);"></i> リアルタイム生成テンプレート表示
+        </span>
+      </div>
+
+      <!-- SNS (X / 旧Twitter) 用 -->
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">
+            <i class="fa-brands fa-x-twitter"></i> SNS・X (旧Twitter) 投稿形式
+          </div>
+          <button class="btn-copy" onclick="copyCardText(this, 'tplSns')">
+            <i class="fa-regular fa-copy"></i> コピー
+          </button>
+        </div>
+        <div id="tplSns" class="template-card-body">地震情報を選択すると生成されます...</div>
+      </div>
+
+      <!-- チャット・Discord 用 -->
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">
+            <i class="fa-brands fa-discord"></i> チャット・Discord 簡略形式
+          </div>
+          <button class="btn-copy" onclick="copyCardText(this, 'tplShort')">
+            <i class="fa-regular fa-copy"></i> コピー
+          </button>
+        </div>
+        <div id="tplShort" class="template-card-body">地震情報を選択すると生成されます...</div>
+      </div>
+
+      <!-- 詳細レポート用 -->
+      <div class="template-card">
+        <div class="template-card-header">
+          <div class="template-card-title">
+            <i class="fa-solid fa-list-check"></i> 業務・詳細報告形式
+          </div>
+          <button class="btn-copy" onclick="copyCardText(this, 'tplDetail')">
+            <i class="fa-regular fa-copy"></i> コピー
+          </button>
+        </div>
+        <div id="tplDetail" class="template-card-body">地震情報を選択すると生成されます...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame Player API の読み込み -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    // グローバル変数
+    let currentData = null;
+    let historyDataList = [];
+    let ytPlayer = null;
+
+    // --- 【編集可能】掲示板の記事データ（プロット分け） ---
+    // ここに記事を追加・編集していくことで、掲示板に反映されます。
+    const bulletinPosts = [
+      {
+        title: "★ver 0.0.85βの公開",
+        date: "2026-10-10",
+        content: "いろんな色を追加したよ！ダーク系も2つ入ったよ☆"
+      },
+      {
+        title: "★ver 0.0.8βの公開",
+        date: "2026-10-10",
+        content: "利用者の諸君！ver 0.0.8βが公開されたぞーーー！いろいろな機能を入れたから、ぜひ楽しんでね！！"
+      },
+      {
+        title: "【重要】P2P地震情報の利用について",
+        date: "2026-10-10",
+        content: "当サイトはP2P地震情報のAPIを利用してリアルタイムな震源・震度情報を取得しています。災害時の備えや情報の確認、情報提供にお役立てください。"
+      },
+      {
+        title: "【重要】運営よりお知らせとお願い",
+        date: "2026-10-10",
+        content: "当サイトは、管理者一名により完全非利益で公開されています。様々なSNS(LINE, Discord含む)やウェブサイトでご利用可能です。しかし、当サイトから引用した情報の収益化はできませんのでご注意ください。万一確認した場合は、今後一切の利用亭を行ったりすることを禁止する場合がございます。十分ご注意ください。"
+      }
+    ];
+
+    // 掲示板の初期描画
+    function initBulletinBoard() {
+      const container = document.getElementById('bulletinContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      bulletinPosts.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'bulletin-card';
+        card.innerHTML = `
+          <div class="bulletin-card-header">
+            <div class="bulletin-title"><i class="fa-solid fa-circle-dot" style="font-size: 0.7rem; margin-right: 6px;"></i>${post.title}</div>
+            <div class="bulletin-date">${post.date}</div>
+          </div>
+          <div class="bulletin-content">${post.content}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // --- YouTube IFrame API 初期化 ---
+    function onYouTubeIframeAPIReady() {
+      const trackSelect = document.getElementById('bgmTrackSelect');
+      const initialVideoId = trackSelect ? trackSelect.value : 'kG-hSbE2ANc';
+
+      ytPlayer = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: initialVideoId,
+        playerVars: {
+          'autoplay': 0,
+          'loop': 1,
+          'playlist': initialVideoId
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {}
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        ytPlayer.playVideo();
+      }
+    }
+
+    function toggleYouTubeBGM() {
+      const bgmState = document.getElementById('bgmToggle').value;
+      if (!ytPlayer) return;
+
+      if (bgmState === 'on') {
+        ytPlayer.playVideo();
+      } else {
+        ytPlayer.pauseVideo();
+      }
+    }
+
+    function changeYouTubeTrack() {
+      const trackSelect = document.getElementById('bgmTrackSelect');
+      const videoId = trackSelect.value;
+      const bgmState = document.getElementById('bgmToggle').value;
+
+      if (ytPlayer && videoId) {
+        ytPlayer.loadVideoById({
+          'videoId': videoId,
+          'suggestedQuality': 'small'
+        });
+        if (bgmState !== 'on') {
+          ytPlayer.pauseVideo();
+        }
+      }
+    }
+
+    // --- タブ切り替え機能 ---
+    function switchTab(tabName) {
+      document.getElementById('tabQuakeBtn').classList.remove('active');
+      document.getElementById('tabBulletinBtn').classList.remove('active');
+      document.getElementById('tabSettingsBtn').classList.remove('active');
+      
+      document.getElementById('tabQuake').classList.remove('active');
+      document.getElementById('tabBulletin').classList.remove('active');
+      document.getElementById('tabSettings').classList.remove('active');
+
+      if (tabName === 'quake') {
+        document.getElementById('tabQuakeBtn').classList.add('active');
+        document.getElementById('tabQuake').classList.add('active');
+      } else if (tabName === 'bulletin') {
+        document.getElementById('tabBulletinBtn').classList.add('active');
+        document.getElementById('tabBulletin').classList.add('active');
+      } else if (tabName === 'settings') {
+        document.getElementById('tabSettingsBtn').classList.add('active');
+        document.getElementById('tabSettings').classList.add('active');
+      }
+    }
+
+    // --- カラーテーマ切り替え機能 ---
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.getElementById('themeSelect').value = savedTheme;
+      applyTheme(savedTheme);
+    }
+
+    function changeTheme() {
+      const theme = document.getElementById('themeSelect').value;
+      localStorage.setItem('theme', theme);
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      document.body.className = '';
+      if (theme !== 'dark') {
+        document.body.classList.add(`theme-${theme}`);
+      }
+    }
+
+    // 震度コード変換マッピング
+    function scaleToText(scale) {
+      switch(scale) {
+        case 10: return "震度1";
+        case 20: return "震度2";
+        case 30: return "震度3";
+        case 40: return "震度4";
+        case 45: return "震度5弱";
+        case 50: return "震度5強";
+        case 55: return "震度6弱";
+        case 60: return "震度6強";
+        case 70: return "震度7";
+        default: return "不明";
+      }
+    }
+
+    function scaleToClass(scale) {
+      if ([10,20,30,40,45,50,55,60,70].includes(scale)) return `scale-${scale}`;
+      return 'scale-unknown';
+    }
+
+    function tsunamiToText(tsunami) {
+      switch(tsunami) {
+        case "None": return "津波の心配なし";
+        case "NonEffective": return "若干の海面変動（被害の心配なし）";
+        case "Checking": return "津波の有無を調査中";
+        case "Slight": return "津波注意報の可能性あり";
+        case "Warning": return "津波警報・注意報が発表されています";
+        default: return "津波情報なし";
+      }
+    }
+
+    // 初期化処理
+    window.onload = function() {
+      initTheme();
+      initBulletinBoard(); // 掲示板初期化
+      requestNotificationPermission();
+      fetchHistory();
+      connectWebSocket();
+    };
+
+    // 画面表示更新
+    function displayQuakeDetail(data) {
+      currentData = data;
+      const eq = data.earthquake || {};
+      const hypo = eq.hypocenter || {};
+
+      document.getElementById('hypocenterName').innerText = hypo.name || '情報発表';
+      document.getElementById('quakeTime').innerText = `発生: ${eq.time || '不明'}`;
+      document.getElementById('updateTime').innerText = data.time || '';
+
+      const scaleStr = scaleToText(eq.maxScale);
+      const scaleBadge = document.getElementById('maxScaleBadge');
+      scaleBadge.innerText = scaleStr;
+      scaleBadge.className = `scale-badge ${scaleToClass(eq.maxScale)}`;
+
+      document.getElementById('magnitudeVal').innerText = hypo.magnitude > 0 ? `M${hypo.magnitude}` : '不明';
+      document.getElementById('depthVal').innerText = hypo.depth >= 0 ? `${hypo.depth} km` : '不明';
+      document.getElementById('tsunamiVal').innerText = tsunamiToText(eq.domesticTsunami);
+
+      updateTemplates();
+    }
+
+    // 右側テンプレート一括更新
+    function updateTemplates() {
+      if (!currentData || !currentData.earthquake) return;
+      const eq = currentData.earthquake;
+      const hypo = eq.hypocenter || {};
+
+      const time = eq.time || '日時不明';
+      const name = hypo.name || '震源地不明';
+      const scale = scaleToText(eq.maxScale);
+      const mag = hypo.magnitude > 0 ? `M${hypo.magnitude}` : '不明';
+      const depth = hypo.depth >= 0 ? `約${hypo.depth}km` : '不明';
+      const tsunami = tsunamiToText(eq.domesticTsunami);
+
+      document.getElementById('tplSns').innerText = 
+        `【地震情報】\n◆ 発生時刻：${time}\n◆ 最大震度：${scale}\n◆ 震源地：${name}\n◆ 規模：${mag} / 深さ：${depth}\n◆ 津波：${tsunami}\n\n#地震 #地震情報 #防災`;
+
+      document.getElementById('tplShort').innerText = 
+        `【地震速報】${time}頃、${name}で最大${scale}（${mag}）の地震が発生しました。${tsunami}`;
+
+      document.getElementById('tplDetail').innerText = 
+        `[地震発生速報情報]\n発生日時: ${time}\n震源地: ${name}\n最大震度: ${scale}\nマグニチュード: ${mag}\n震源の深さ: ${depth}\n津波の有無: ${tsunami}\nデータ提供: P2P地震情報`;
+    }
+
+    // 各カードのテキストコピー処理
+    function copyCardText(btn, elementId) {
+      const text = document.getElementById(elementId).innerText;
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> 完了!`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = `<i class="fa-regular fa-copy"></i> コピー`;
+        }, 2000);
+      });
+    }
+
+    // 過去一週間の地震情報履歴取得 (REST API)
+    async function fetchHistory() {
+      try {
+        const res = await fetch("https://api.p2pquake.net/v2/history?codes=551&limit=40");
+        const data = await res.json();
+        historyDataList = data;
+        renderHistoryList(data);
+        if (data.length > 0) displayQuakeDetail(data[0]);
+      } catch (err) {
+        console.error("履歴取得エラー:", err);
+      }
+    }
+
+    // 履歴リストの描写
+    function renderHistoryList(list) {
+      const container = document.getElementById('historyList');
+      container.innerHTML = '';
+
+      list.forEach((item, index) => {
+        const eq = item.earthquake || {};
+        const hypo = eq.hypocenter || {};
+        
+        const div = document.createElement('div');
+        div.className = `history-item ${index === 0 ? 'active' : ''}`;
+        div.onclick = () => {
+          document.querySelectorAll('.history-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          displayQuakeDetail(item);
+        };
+
+        div.innerHTML = `
+          <div class="history-info">
+            <span class="history-time">${eq.time || item.time}</span>
+            <span class="history-hypo">${hypo.name || '震源地不明'}</span>
+          </div>
+          <div class="scale-badge ${scaleToClass(eq.maxScale)}">${scaleToText(eq.maxScale)}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // WebSocket リアルタイムライブ受信
+    function connectWebSocket() {
+      const statusDot = document.getElementById('statusDot');
+      const statusText = document.getElementById('statusText');
+      
+      const ws = new WebSocket("wss://api.p2pquake.net/v2/ws");
+
+      ws.onopen = () => {
+        statusDot.className = "status-dot active";
+        statusText.innerText = "LIVE 接続中";
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.code === 551) {
+          historyDataList.unshift(data);
+          renderHistoryList(historyDataList);
+          displayQuakeDetail(data);
+          checkDesktopNotification(data);
+        } else if (data.code === 556) {
+          showEEWAlert(data);
+        }
+      };
+
+      ws.onclose = () => {
+        statusDot.className = "status-dot";
+        statusText.innerText = "再接続中...";
+        setTimeout(connectWebSocket, 5000);
+      };
+    }
+
+    // デスクトップ通知要求
+    function requestNotificationPermission() {
+      if ("Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+
+    // デスクトップ通知判定＆発火
+    function checkDesktopNotification(data) {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+      const threshold = parseInt(document.getElementById('notifyThreshold').value, 10);
+      const maxScale = data.earthquake?.maxScale || 0;
+
+      if (maxScale >= threshold) {
+        const hypo = data.earthquake?.hypocenter?.name || "不明";
+        const scaleStr = scaleToText(maxScale);
+        
+        new Notification(`【地震通知】最大${scaleStr}`, {
+          body: `震源地: ${hypo}\n発生時刻: ${data.earthquake?.time || ''}\n${tsunamiToText(data.earthquake?.domesticTsunami)}`,
+          icon: "https://cdn-icons-png.flaticon.com/512/1207/1207557.png"
+        });
+      }
+    }
+
+    // 緊急地震速報（警報）の表示
+    function showEEWAlert(data) {
+      const alertBox = document.getElementById('eewAlert');
+      alertBox.style.display = 'block';
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("【🚨緊急地震速報】強い揺れに警戒してください！", {
+          body: `発表時刻: ${data.time}`,
+          requireInteraction: true
+        });
+      }
+      setTimeout(() => { alertBox.style.display = 'none'; }, 30000);
+    }
+
+    function saveNotificationSettings() {
+      requestNotificationPermission();
+    }
+  </script>
+</body>
+</html>
+<FollowUp> 
+β版サイトです。正式公開まで今しばらくお待ちください。
